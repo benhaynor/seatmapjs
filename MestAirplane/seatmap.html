@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>CRJ-700 Seat Map</title>
+<style type="text/css">
+#seatmap .row {
+	clear: both;
+}
+#seatmap .rowNumber {
+	float: left;
+	width: 20px;
+	text-align: right;
+	padding-right: 5px;
+}
+#seatmap .seat {
+	border: 1px solid black;
+	width: 20px;
+	height: 25px;
+	margin: 1px;
+	float: left;
+}
+#seatmap .firstClass .seat {
+	background-color: #CCFFCC;
+}
+#seatmap .economyClass .seat {
+	background-color: #FFFFCC;
+}
+#seatmap .firstClass .seat.occupied {
+	background-color: #66FF66;
+}
+#seatmap .economyClass .seat.occupied {
+	background-color: #FFFF66;
+}
+#seatmap .seat.c {
+	margin-left: 10px;
+}
+</style>
+<script type="text/javascript" src="seatmap_compiled.js"></script>
+</head>
+<body onload="init()">
+	<div id="seatmap">
+	</div>
+</body>
+</html>
