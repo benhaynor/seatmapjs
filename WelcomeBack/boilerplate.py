@@ -39,7 +39,7 @@ class PlaneHandler(RequestHandler):
         self.render('seatmap.html')
 
     def post(self):
-        self.write('hey')
+        self.write(self.request.get)
 
 application = webapp.WSGIApplication([('/',MainPage),
                                       ('/seatmap.*',PlaneHandler)
