@@ -13,11 +13,16 @@ var SEATS = ['a', 'b', 'c', 'd'];
  * @param {string} seatLetter The seat letter of this seat, one of 'a', 'b', 'c', or 'd'.
  * @constructor
  */
-function Seat(element, seatLetter) {
+function Seat(element, seatLetter, rowNumber) {
+    this.rowNumber = rowNumber;
+    this.ticketClass = rowNumberToServiceClass(rowNumber);
 	this.element = element;
 	this.seatLetter = seatLetter;
+    this.element.id = this.rowNumber + this.seatLetter;
 	this.occupied = false;
 	this.passenger = "";
+    this.updateClass_();
+    this.setupClickListener_();
 }
 
 /**
@@ -28,7 +33,15 @@ function Seat(element, seatLetter) {
 Seat.prototype.setupClickListener_ = function() {
 	// When referring to the seat inside the event handler, use "me" instead of "this".
 	var me = this;
-	alert("got me!");
+    me.element.onclick = function(){ 
+        if(me.passenger==""){
+            me.passenger = prompt("What is your name?");
+            me.occupied = true;
+            me.updateClass_();
+        } else {
+            alert(me.passenger + " is already sitting in this seat.");
+        }
+    }
 };
 
 /**
@@ -38,7 +51,9 @@ Seat.prototype.updateClass_ = function() {
 	// The seat's className property should be set to 'seat' plus the letter of the seat, e.g.
 	// 'seat a', 'seat b', 'seat c', or 'seat d'. Additionally, if a seat is occupied, then it
 	// should also contain the word 'occupied'.
+    this.element.className = "seat " + this.seatLetter + " " + this.ticketClass + " " + (this.occupied ? "occupied": ""); 
 };
+
 
 /**
  * Converts an index into the seat array and returns the corresponding letter.
@@ -46,6 +61,7 @@ Seat.prototype.updateClass_ = function() {
  * @return {string} The seat letter 
  */
 function indexToSeatLetter(i) {
+    return SEATS[i];
 }
 
 /**
@@ -54,6 +70,7 @@ function indexToSeatLetter(i) {
  * @return {string} The service class, either 'firstClass' or 'economyClass'.
  */
 function rowNumberToServiceClass(row) {
+    return ((row >NUM_FIRST_CLASS_ROWS)? 'economyClass' : 'firstClass');
 }
 
 /**
@@ -75,44 +92,57 @@ function createElement(type, container) {
  * @param {Element} container The table element which will contain the row.
  * @return {Element} The row element.
  */
-function addRow(rowNumber, container) {
+function Row(rowNumber, container) {
 	
-	var row = createElement("div",container);
-	row.className += "row";
-	var seatNumber = createElement("div",row);
+	this.row = createElement("div",container);
+	this.row.className += "row";
+	var seatNumber = createElement("div",this.row);
 	seatNumber.innerHTML = rowNumber;
 	seatNumber.className += "rowNumber";
-	for (var i = 1; i <= 4; i ++){
-		var seat = createElement('div', row);
-		seat.className += "seat " + SEATS[i-1];
-        seat.id = rowNumber+['a','b','c','d'][i-1];
-		function handleClick(e) {
-			if(e.srcElement.name==undefined){
-				var passenger = prompt("What is your name?");
-				e.srcElement.className += " occupied";
-				e.srcElement.name = passenger;
-			} else {
-				alert(e.srcElement.name + " is already sitting in this seat.");
-			}
-		}
-		seat.addEventListener('click',handleClick,false);
+    this.seats = [];
+	for (var i = 0; i <= 3; i ++){
+		var seatNode = createElement('div', this.row);
+        var seatObj = new Seat(seatNode,SEATS[i],rowNumber);
+        this.seats.push(seatObj);
 		if (rowNumber == 18 && i == 2){
 			break;
 		}
 	}
 }
 
-function init() {
-	var seatMap = document.getElementById("seatmap");
-	var firstClass = createElement("div",seatMap);
-	firstClass.className += "firstClass";
-	for (var i = 1; i <= 5; i ++){
-		addRow(i,firstClass);
-	}
-	var economyClass = createElement("div",seatMap);
-	economyClass.className += "economyClass";
-	for (var i = 6; i <= 18; i ++){
-		addRow(i,economyClass);
-	}
-	// Rows and seats are represented with DIV elements.
+Airplane.prototype.tojson = function(){
+    json = [];
+    for(var i in this.rows){
+        passengers = [];
+        seats = this.rows[i].seats; 
+        for (var j in seats){
+            passengers.push(seats[j].passenger);
+        }
+        json.push(passengers);
+    }
+    return json;
 }
+
+function Airplane(){
+ 	var seatMap = document.getElementById("seatmap");
+    this.rows = [];
+    for (var i = 0; i < NUM_SEATS; i ++){
+        
+    }
+    //this.firstClass = createElement("div",seatMap);
+	//this.firstClass.className += "firstClass";
+	for (var i = 1; i <= 5; i ++){
+		this.rows.push(new Row(i,seatMap));
+	}
+	//this.economyClass = createElement("div",seatMap);
+    //this.economyClass.className += "economyClass";
+	for (var i = 6; i <= 18; i ++){
+		this.rows.push(new Row(i,seatMap));
+	}
+	// Rows and seats are represented with DIV elements.   
+}
+
+function init() {
+    window.airplane = new Airplane();
+}
+
