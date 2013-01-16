@@ -14,15 +14,15 @@ var SEATS = ['a', 'b', 'c', 'd'];
  * @constructor
  */
 function Seat(element, seatLetter, rowNumber) {
-    this.rowNumber = rowNumber;
-    this.ticketClass = rowNumberToServiceClass(rowNumber);
+	this.rowNumber = rowNumber;
+	this.ticketClass = rowNumberToServiceClass(rowNumber);
 	this.element = element;
 	this.seatLetter = seatLetter;
-    this.element.id = this.rowNumber + this.seatLetter;
+	this.element.id = this.rowNumber + this.seatLetter;
 	this.occupied = false;
 	this.passenger = "";
-    this.updateClass_();
-    this.setupClickListener_();
+	this.updateClass_();
+	this.setupClickListener_();
 }
 
 /**
@@ -33,15 +33,15 @@ function Seat(element, seatLetter, rowNumber) {
 Seat.prototype.setupClickListener_ = function() {
 	// When referring to the seat inside the event handler, use "me" instead of "this".
 	var me = this;
-    me.element.onclick = function(){ 
-        if(me.passenger==""){
-            me.passenger = prompt("What is your name?");
-            me.occupied = true;
-            me.updateClass_();
-        } else {
-            alert(me.passenger + " is already sitting in this seat.");
-        }
-    }
+	me.element.onclick = function(){ 
+		if(me.passenger==""){
+			me.passenger = prompt("What is your name?");
+			me.occupied = true;
+			me.updateClass_();
+		} else {
+			alert(me.passenger + " is already sitting in this seat.");
+		}
+	}
 };
 
 /**
@@ -51,7 +51,7 @@ Seat.prototype.updateClass_ = function() {
 	// The seat's className property should be set to 'seat' plus the letter of the seat, e.g.
 	// 'seat a', 'seat b', 'seat c', or 'seat d'. Additionally, if a seat is occupied, then it
 	// should also contain the word 'occupied'.
-    this.element.className = "seat " + this.seatLetter + " " + this.ticketClass + " " + (this.occupied ? "occupied": ""); 
+	this.element.className = "seat " + this.seatLetter + " " + this.ticketClass + " " + (this.occupied ? "occupied": ""); 
 };
 
 
@@ -61,7 +61,7 @@ Seat.prototype.updateClass_ = function() {
  * @return {string} The seat letter 
  */
 function indexToSeatLetter(i) {
-    return SEATS[i];
+	return SEATS[i];
 }
 
 /**
@@ -70,7 +70,7 @@ function indexToSeatLetter(i) {
  * @return {string} The service class, either 'firstClass' or 'economyClass'.
  */
 function rowNumberToServiceClass(row) {
-    return ((row >NUM_FIRST_CLASS_ROWS)? 'economyClass' : 'firstClass');
+	return ((row >NUM_FIRST_CLASS_ROWS)? 'economyClass' : 'firstClass');
 }
 
 /**
@@ -99,11 +99,14 @@ function Row(rowNumber, container) {
 	var seatNumber = createElement("div",this.row);
 	seatNumber.innerHTML = rowNumber;
 	seatNumber.className += "rowNumber";
-    this.seats = [];
+	this.seats = [];
 	for (var i = 0; i <= 3; i ++){
+		if (rowNumber == 18 && i == 2){
+			break;
+		}
 		var seatNode = createElement('div', this.row);
-        var seatObj = new Seat(seatNode,SEATS[i],rowNumber);
-        this.seats.push(seatObj);
+		var seatObj = new Seat(seatNode,SEATS[i],rowNumber);
+		this.seats.push(seatObj);
 		if (rowNumber == 18 && i == 2){
 			break;
 		}
@@ -111,38 +114,50 @@ function Row(rowNumber, container) {
 }
 
 Airplane.prototype.tojson = function(){
-    json = [];
-    for(var i in this.rows){
-        passengers = [];
-        seats = this.rows[i].seats; 
-        for (var j in seats){
-            passengers.push(seats[j].passenger);
-        }
-        json.push(passengers);
-    }
-    return json;
+	json = [];
+	for(var i in this.rows){
+		passengers = [];
+		seats = this.rows[i].seats; 
+		for (var j in seats){
+			passengers.push(seats[j].passenger);
+		}
+		json.push(passengers);
+	}
+	return json;
 }
 
 function Airplane(){
  	var seatMap = document.getElementById("seatmap");
-    this.rows = [];
-    for (var i = 0; i < NUM_SEATS; i ++){
-        
-    }
-    //this.firstClass = createElement("div",seatMap);
-	//this.firstClass.className += "firstClass";
+	this.rows = [];
 	for (var i = 1; i <= 5; i ++){
 		this.rows.push(new Row(i,seatMap));
 	}
-	//this.economyClass = createElement("div",seatMap);
-    //this.economyClass.className += "economyClass";
 	for (var i = 6; i <= 18; i ++){
 		this.rows.push(new Row(i,seatMap));
 	}
 	// Rows and seats are represented with DIV elements.   
 }
 
+function fly(){
+	$.getJSON('/checker',
+			{'airplane':JSON.stringify(airplane.tojson())},
+			function(data){
+				window.console.log(data);
+			}
+	);	
+	
+//	$.post('/checker',{
+//		data:{'airplane':airplane.tojson()},
+//		success: function(data){
+//			window.console.log(data);
+//			alert('success!');
+//			window.response=data;
+//		},
+//		datatype:"jsonp"
+//	});
+}
+
 function init() {
-    window.airplane = new Airplane();
+	window.airplane = new Airplane();
 }
 
