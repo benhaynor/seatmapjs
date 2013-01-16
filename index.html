@@ -47,6 +47,28 @@ $ dev_appserver.py .
 <p>The command dev_appserver.py replaces the Google App Engine launcher that you may be familiar with from windows. You should now be able to browse to a nearly blank page by opening a browser and navigating to <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 
 <p>We'll be adding a few features to the seatmap that we worked on last semester.  To get a reminder of what we implemented, visit: <a href="https://docs.google.com/document/d/1gd4rXCZBkmmFetru-ujxYTomVgNChCFfySLks__gcBU/edit">this google doc</a>.  Or to see the app in action, check out <a href="http://mesttech2014.appspot.com/">http://mesttech2014.appspot.com</a></p>
+
+<p>Your program will be graded on both functionality and style.  The functionality is captured in the following unit tests.</p>
+
+<h4>test_ids</h4>
+
+<p>Each seat on the airplane should be represented as a div.  The divs should have ids 1a, 1b, 1c, 1d, 2a, 2b, ..., 18a, 18b.  This is necessary for testing purposes.</p>
+
+<h4>test_json</h4>
+
+<p>You should attach an airplane object to the window.  The airplane object should have a method tojson() which returns a 2d array of passenger names.  If the plane is empty, it should return the array
+[["","","",""],
+["","","",""],
+...
+["",""]].</p>
+
+<h4>test_seating</h4>
+
+<p>When a user clicks on a seat, they should be prompted to enter the name of a passenger.  This name should be stored by the airplane object.  After entering Ben into seat 1a, Rowdy into seat 2b, airplane.tojson() should return:
+[["Ben","","",""],
+["","Rowdy","",""],
+...
+["",""]]</p>
       </section>
     </div>
 
