@@ -4,11 +4,18 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>CRJ-700 Seat Map</title>
 		<link rel="stylesheet" type="text/css" href="/seatmap.css">
-		<script type="text/javascript" src="seatmap.js"></script>
+		<script type="text/javascript" src="seatmap.jsc"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	</head>
 	<body onload="init();">
-		<div id="seatmap"></div>
-		<button onclick="fly();">Submit</button>
+		<div class="seatmap" id="seatmap_return">
+			<h1>Return flight</h1>
+		</div>
+		<div class="seatmap" id="seatmap_out">
+			<h1>Outgoing flight </h1>
+		</div>
+		<div id ="reserveSeats">
+			<button id="reserveSeatsButton" onclick="fly();" type="submit">Reserve Seats</button>
+		</div>	
 	</body>
 </html>
