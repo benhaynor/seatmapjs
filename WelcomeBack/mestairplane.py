@@ -36,35 +36,7 @@ class PlaneHandler(RequestHandler):
 	def get(self):
 		self.render('seatmap.html')
 
-	def post(self):
-		#self.response.headers['Content-Type'] = 'application/jsonp'
-		logging.error('hey')
-		logging.error(self.request.get('data'))
-		self.write(simplejson.dumps({'hey':'you'}.items()))
-
-class JsonHandler(RequestHandler):
-
-	def get(self):
-		logging.error(self.request.get('airplane'))
-		airplane = json.loads(self.request.get('airplane'))
-		logging.error(len(airplane[0]))
-		self.write(json.dumps(self.request.get('airplane')))
-
-class SuccessHandler(RequestHandler):
-	
-	def get(self):
-		self.out.write("Ready to fly")
-
-class FailureHandler(RequestHandler):
-
-	def post(self):
-		self.response.headers['Content-Type'] = 'application/jsonp'
-		self.out.write("Alert.  Terrorists present")
-
-application = webapp.WSGIApplication([('/',PlaneHandler),
-	('/checker',JsonHandler),
-	('/success',SuccessHandler),
-	('/failure',FailureHandler)
+application = webapp.WSGIApplication([('/',PlaneHandler)
 	],debug=True)
 
 
