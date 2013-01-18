@@ -52,15 +52,15 @@ $ dev_appserver.py .
 
 <h4>test_ids</h4>
 
-<p>Each seat on the airplane should be represented as a div.  The divs should have ids 1a, 1b, 1c, 1d, 2a, 2b, ..., 18a, 18b.  This is necessary for testing purposes.</p>
+<p>Each seat on the airplane should be represented as a div.  The divs should have ids 1aOut, 1bOut, 1cOut, 1dOut, 2aOut, 2bOut, ..., 18aOut, 18bOut.  1aReturn, 1bReturn, 1cReturn, 1dReturn, ... 18aReturn, 18bReturn.</p>
 
 <h4>test_json</h4>
 
-<p>You should attach an airplane object to the window.  The airplane object should have a method tojson() which returns a 2d array of passenger names.  If the plane is empty, it should return the array
+<p>After initialization, your window should contain two objects, airplaneOut, and airplaneReturn attached to the window.  The airplane objects should have a method tojson() which returns a 2d array of passenger names.  If the plane is empty, it should return the array
 [["","","",""],
 ["","","",""],
 ...
-["",""]].</p>
+["",""]]</p>
 
 <h4>test_seating</h4>
 
@@ -71,6 +71,12 @@ $ dev_appserver.py .
 ["",""]]</p>
 
 <h4>test_no_fly_list_with_terrorist</h4>
+
+<p>When a user clicks on the reserveSeatsButton, you should send an ajax call to the server with a passenger list.  The server should read the json and check it against an internal terrorist watch list.  If there is a terrorist on the plane list, the browser should alert "Alert the Authorities!".  This test tries to put "Osama Bin Laden" in seat 1a.</p>
+
+<h4>test_no_fly_list_with_no_terrorist</h4>
+
+<p>Similar to the above test.  After entering "Harmless Ben" into the terrorist watch list, and submitting an ajax request to the server, the browser should pop up an alert with the message "Enjoy your flight!".</p>
       </section>
     </div>
 
