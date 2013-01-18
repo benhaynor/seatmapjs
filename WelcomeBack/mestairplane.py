@@ -6,15 +6,14 @@ import logging
 import json
 import jinja2
 import os
-import simplejson
 
 template_dir = "htmltemplates"
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 							   autoescape = True)
 
-terrorist_watch_list = ['fred','sam','bill','eddie']
+terrorist_watch_list = ['Osama Bin Laden','Widad Aagesen','Ziyad Aaker','Tariq Aakre','Alphonse Aalfs','Robin Aalgaard','Noble Aamodt','Maynord Aamold','Carrie Aamoth','Higgins Aanerud','Jace Aardema','Brinkley Aarhus','Pieter Aaronson','Ghaazi Aarris','Makai Aarsvold','Taddeus Aarsvold','Ammar Aarts','Claus Aase','Ola Aasen','Riccardo Aasland','Abaan Aasness','Sargent Abadie','Sterne Abadilla','Weylin Abadir','Tynan Abair','Felice Abang','Deon Abanto','Penny Abara','Grove Abarbanel','Finis Abarca','Adger Abare']
 
-def render_str(template, **params):
+Def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
 
