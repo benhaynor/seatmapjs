@@ -13,7 +13,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
 
 terrorist_watch_list = ['Osama Bin Laden','Widad Aagesen','Ziyad Aaker','Tariq Aakre','Alphonse Aalfs','Robin Aalgaard','Noble Aamodt','Maynord Aamold','Carrie Aamoth','Higgins Aanerud','Jace Aardema','Brinkley Aarhus','Pieter Aaronson','Ghaazi Aarris','Makai Aarsvold','Taddeus Aarsvold','Ammar Aarts','Claus Aase','Ola Aasen','Riccardo Aasland','Abaan Aasness','Sargent Abadie','Sterne Abadilla','Weylin Abadir','Tynan Abair','Felice Abang','Deon Abanto','Penny Abara','Grove Abarbanel','Finis Abarca','Adger Abare']
 
-Def render_str(template, **params):
+def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
 

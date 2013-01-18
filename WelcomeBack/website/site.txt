@@ -20,7 +20,7 @@ The command dev_appserver.py replaces the Google App Engine launcher that you ma
 We'll be adding a few features to the seatmap that we worked on last semester.  To get a reminder of what we implemented, visit: [this google doc](https://docs.google.com/document/d/1gd4rXCZBkmmFetru-ujxYTomVgNChCFfySLks__gcBU/edit).  Or to see the app in action, check out [http://mesttech2014.appspot.com](http://mesttech2014.appspot.com/)
 
 ### Instructions on Windows
-
+Download 
 
 Your program will be graded on both functionality and style.  The functionality is captured in the following unit tests.
 
